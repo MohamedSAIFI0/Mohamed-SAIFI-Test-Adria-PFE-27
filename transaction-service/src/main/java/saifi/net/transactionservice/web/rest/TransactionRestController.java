@@ -1,6 +1,17 @@
 package saifi.net.transactionservice.web.rest;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import saifi.net.transactionservice.domain.Transaction;
+import saifi.net.transactionservice.service.TransactionRequest;
+import saifi.net.transactionservice.service.TransactionService;
+import saifi.net.transactionservice.service.TransferRequest;
+import saifi.net.transactionservice.service.TransferResult;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/transactions")

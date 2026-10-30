@@ -1,5 +1,22 @@
 package saifi.net.transactionservice.service;
 
+import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import saifi.net.transactionservice.client.AccountDto;
+import saifi.net.transactionservice.client.AccountGateway;
+import saifi.net.transactionservice.config.BankTransactionProperties;
+import saifi.net.transactionservice.domain.Transaction;
+import saifi.net.transactionservice.exception.BusinessRuleException;
+import saifi.net.transactionservice.exception.ResourceNotFoundException;
+import saifi.net.transactionservice.repository.TransactionRepository;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -9,7 +26,6 @@ public class TransactionService {
     private final AccountGateway accounts;
     private final BankTransactionProperties props;
 
-    /** Opération (débit) sur un compte : applique les règles métier de l'énoncé. */
     @Transactional
     public Transaction create(TransactionRequest req) {
         validateAmount(req.amount());
@@ -30,7 +46,6 @@ public class TransactionService {
         return tx;
     }
 
-    /** Virement : débit du compte source, crédit du compte destination, compensation si le crédit échoue. */
     @Transactional
     public TransferResult transfer(TransferRequest req) {
         if (req.fromAccountId().equals(req.toAccountId())) {
@@ -77,7 +92,6 @@ public class TransactionService {
         return repository.findByAccountIdOrderByCreatedAtDesc(accountId);
     }
 
-    // ---------- règles métier ----------
     private void validateAmount(BigDecimal amount) {
         if (amount == null || amount.signum() <= 0) {
             throw new BusinessRuleException("Le montant doit être strictement positif");

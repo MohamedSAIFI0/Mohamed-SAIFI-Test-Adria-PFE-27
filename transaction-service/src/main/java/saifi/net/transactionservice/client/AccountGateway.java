@@ -1,5 +1,16 @@
 package saifi.net.transactionservice.client;
 
+import feign.FeignException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import saifi.net.transactionservice.exception.AccountServiceUnavailableException;
+import saifi.net.transactionservice.exception.BusinessRuleException;
+import saifi.net.transactionservice.exception.ResourceNotFoundException;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Slf4j

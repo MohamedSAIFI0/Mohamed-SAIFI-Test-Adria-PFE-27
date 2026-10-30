@@ -1,5 +1,19 @@
 package saifi.net.transactionservice.mcp;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.stereotype.Component;
+import saifi.net.transactionservice.domain.Transaction;
+import saifi.net.transactionservice.service.TransactionRequest;
+import saifi.net.transactionservice.service.TransactionService;
+import saifi.net.transactionservice.service.TransferRequest;
+import saifi.net.transactionservice.service.TransferResult;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class TransactionMcpTools {
