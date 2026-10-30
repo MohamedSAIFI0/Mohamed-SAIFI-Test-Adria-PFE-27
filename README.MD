@@ -7,6 +7,7 @@
 ---
 
 ## Partie B : Conception et architecture
+![Architecture du projet](img.png)
 
 | Composant | Rôle |
 |---|---|
