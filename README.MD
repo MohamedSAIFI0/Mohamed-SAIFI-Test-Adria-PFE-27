@@ -22,7 +22,7 @@
 | Keycloak | Authentification et autorisations (prévu dans l'architecture cible) |
 
 ### Choix de conception
-
+![DC](img_1.png)
 - **Séparation en couches** : `domain / repository / service / web/rest / web/graphql / mcp`. Les trois contrôleurs (REST, GraphQL, MCP) appellent la même couche `service`. Aucune logique métier n'est dans les contrôleurs : une règle n'est écrite qu'une fois.
 - **Une base par micro-service.** `Transaction` ne porte pas de relation JPA vers `Account`, seulement un `accountId`. La cohérence passe par les appels OpenFeign.
 - **Types monétaires.** L'énoncé impose `balance: double` côté compte et `BigDecimal` côté transaction. La conversion est explicite (`BigDecimal.valueOf`). Un `BigDecimal` serait préférable pour le solde afin d'éviter les erreurs d'arrondi.
